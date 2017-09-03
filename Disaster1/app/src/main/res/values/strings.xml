@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Disaster1</string>
+    <array name="memberno">\
+        <item>Member No</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

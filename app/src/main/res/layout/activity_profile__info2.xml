@@ -8,10 +8,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:padding="16dp"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
 
         <TextView
@@ -24,19 +26,22 @@
             android:textStyle="bold" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spinnerj"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="19dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="9dp"
+            android:background="@android:color/darker_gray"
+            android:entries="@array/job"
+             />
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="22dp"
         android:text="MOTHER TONGUE"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -44,17 +49,20 @@
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="19dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="9dp"
+            android:background="@android:color/darker_gray"
+            android:entries="@array/mother_tounge"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="22dp"
             android:text="EDUCATION"
             android:textColor="@android:color/white"
             android:textSize="24sp"
@@ -62,17 +70,20 @@
         <Spinner
             android:id="@+id/spinner3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="19dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="9dp"
+            android:background="@android:color/darker_gray"
+            android:entries="@array/education"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="22dp"
             android:text="GENDER"
             android:textColor="@android:color/white"
             android:textSize="24sp"
@@ -80,13 +91,16 @@
         <Spinner
             android:id="@+id/spinner4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="19dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="9dp"
+            android:background="@android:color/darker_gray"
+            android:entries="@array/gender"
+            />
 
     </LinearLayout>
     <LinearLayout
@@ -97,6 +111,7 @@
         android:layout_marginBottom="100dp">
 
         <Button
+            android:id="@+id/btnreg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -122,11 +137,13 @@
             android:textColor="@android:color/white" />
 
         <TextView
+            android:id="@+id/textsign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign In"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="sign_in"/>
     </LinearLayout>
 
 

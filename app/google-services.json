@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1032197458874",
-    "firebase_url": "https://fir-demo-c3b10.firebaseio.com",
-    "project_id": "fir-demo-c3b10",
-    "storage_bucket": "fir-demo-c3b10.appspot.com"
+    "project_number": "1013590086477",
+    "firebase_url": "https://biyeshadi-13992.firebaseio.com",
+    "project_id": "biyeshadi-13992",
+    "storage_bucket": "biyeshadi-13992.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1032197458874:android:d6a9795b4673916e",
+        "mobilesdk_app_id": "1:1013590086477:android:d6a9795b4673916e",
         "android_client_info": {
           "package_name": "com.example.user.firebasedemo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1032197458874-c99c7tm83emas99fftt2qkfdsc9djre7.apps.googleusercontent.com",
+          "client_id": "1013590086477-i4pn8qph6d2salahg52fe1q3hbsti7dq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.user.firebasedemo",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "1032197458874-4f4oolpv929kqmma5upmfk7ro9hlh5li.apps.googleusercontent.com",
+          "client_id": "1013590086477-845mabcq4sqrdro0gf1r1q8v4kf20o3m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAu9yqKno0pvnGxRBswnwCKxVRxVdG64so"
+          "current_key": "AIzaSyCnLpSwpjsRVHS1ctevl6lf0wC5CUSqv3U"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1032197458874-4f4oolpv929kqmma5upmfk7ro9hlh5li.apps.googleusercontent.com",
+              "client_id": "1013590086477-845mabcq4sqrdro0gf1r1q8v4kf20o3m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
