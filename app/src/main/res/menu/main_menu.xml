@@ -5,10 +5,22 @@
     android:icon="@mipmap/ic_add_black_24dp"
     android:title="Add Post"
     app:showAsAction="always"/>
+
     <item android:id="@+id/action_settings"
         android:title="Settings"
+        app:showAsAction="never"/>
+    <item android:id="@+id/myPost"
+        android:title="My post"
+        app:showAsAction="never"/>
+    <item android:id="@+id/member_details"
+        android:title="Member Details"
+        app:showAsAction="never"/>
+    <item android:id="@+id/my_profile"
+        android:title="My Profile"
         app:showAsAction="never"/>
     <item android:id="@+id/action_logout"
         android:title="Log Out"
         app:showAsAction="never"/>
+
 </menu>
+

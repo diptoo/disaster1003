@@ -99,7 +99,7 @@ public class register_activity extends AppCompatActivity implements View.OnClick
                             Toast.makeText(register_activity.this,"Registration Error",Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
-                        Intent mainIntent=new Intent(register_activity.this,blog_app.class);
+                        Intent mainIntent=new Intent(register_activity.this,Input.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainIntent);
                     }

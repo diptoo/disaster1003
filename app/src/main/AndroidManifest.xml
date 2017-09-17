@@ -36,8 +36,19 @@
         <activity android:name=".PostActivity" />
         <activity android:name=".blog_app" />
         <activity android:name=".DonateBlog" />
+        <activity android:name=".Input" />
+        <activity android:name=".BlogSingleActivity" />
+        <activity android:name=".ProfilePage" />
         <activity android:name=".SetupActivity" />
-        <activity android:name=".BlogSingleActivity"></activity>
+        <activity android:name=".Check" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".MemberDetails" />
+        <activity android:name=".EditProfile" />
+        <activity android:name=".FbgmLogin" />
+        <activity android:name=".MyPost" />
+        <activity android:name=".DonateHome" />
+        <activity android:name=".DonateSingleActivity" />
+        <activity android:name=".DonateInfo"></activity>
     </application>
 
 </manifest>

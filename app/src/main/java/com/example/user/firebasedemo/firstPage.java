@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class firstPage extends AppCompatActivity implements View.OnClickListener{
     private Button collectButton;
@@ -23,11 +24,13 @@ public class firstPage extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if(view==collectButton) {
-            startActivity(new Intent(firstPage.this, Login.class));
+
+            startActivity(new Intent(firstPage.this, blog_app.class));
         }
         else if(view==donatetButton)
         {
-            startActivity(new Intent(firstPage.this,blog_app.class));
+            Toast.makeText(firstPage.this,"Donate home a dhukhse",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(firstPage.this,DonateHome.class));
         }
     }
 }

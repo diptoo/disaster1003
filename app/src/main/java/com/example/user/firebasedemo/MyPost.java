@@ -2,7 +2,6 @@ package com.example.user.firebasedemo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,16 +22,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class blog_app extends AppCompatActivity {
-//LAYOUT A TOOLS LINE MISSING
-//MAIN MENU ICON ER KAJ LAST A
-
+public class MyPost extends AppCompatActivity {
     private RecyclerView mBlogList;//LIST VIEW
     private DatabaseReference mDatabase;
-    private DatabaseReference mDatabaseUsers,mDatabaseLike; //user for current user
+    private Query mCur;
+    private DatabaseReference mDatabaseUsers,mDatabaseLike,mDatabaseCurrentUser; //user for current user
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private boolean mProcessLike=false;
@@ -40,14 +38,13 @@ public class blog_app extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog_app);
-
-        mAuth=FirebaseAuth.getInstance();
+        mAuth= FirebaseAuth.getInstance();
         mAuthListener= new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser()==null)
                 {
-                    Intent loginIntent=new Intent(blog_app.this,Login.class);
+                    Intent loginIntent=new Intent(MyPost.this,Login.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
@@ -61,6 +58,9 @@ public class blog_app extends AppCompatActivity {
         mDatabase= FirebaseDatabase.getInstance().getReference().child("Blog");//BLOG child er under a all data save
         mDatabaseUsers=FirebaseDatabase.getInstance().getReference().child("Users");//users is a child
         mDatabaseLike=FirebaseDatabase.getInstance().getReference().child("Likes");
+        String currentUserid=mAuth.getCurrentUser().getUid();
+        mDatabaseCurrentUser=FirebaseDatabase.getInstance().getReference().child("Blog");
+        mCur=mDatabaseCurrentUser.orderByChild("uid").equalTo(currentUserid);
         mDatabaseUsers.keepSynced(true);
         mDatabaseLike.keepSynced(true);
         mDatabase.keepSynced(true);
@@ -71,7 +71,7 @@ public class blog_app extends AppCompatActivity {
         mBlogList.setLayoutManager(new LinearLayoutManager(this));//VERTICAL FORMAT
         //List view end
 
-       // checkUserExist();
+        // checkUserExist();
     }
 
     protected void onStart()
@@ -79,15 +79,15 @@ public class blog_app extends AppCompatActivity {
         super.onStart();
 
         mAuth.addAuthStateListener(mAuthListener);
-       //model class Blog,viewholder view te value set from blog
-        FirebaseRecyclerAdapter<Blog,BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+        //model class Blog,viewholder view te value set from blog
+        FirebaseRecyclerAdapter<Blog,blog_app.BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, blog_app.BlogViewHolder>(
                 Blog.class,
                 R.layout.blog_row,
-                BlogViewHolder.class,
-                mDatabase
+                blog_app.BlogViewHolder.class,
+                mCur
         ) {
             @Override
-            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+            protected void populateViewHolder(blog_app.BlogViewHolder viewHolder, Blog model, int position) {
                 final String post_key=getRef(position).getKey();
 
                 viewHolder.setTitle(model.getTitle());//TITLE ER VITOR JETA TYPRE KORA HOISE FUNCTION  PASS KORE blog cls a jay
@@ -95,13 +95,13 @@ public class blog_app extends AppCompatActivity {
                 viewHolder.setDesc(model.getDesc());
                 viewHolder.setImage(getApplicationContext(),model.getImage()); //context Picasso is a library and not an application.application er moto kaj korar jonno
                 viewHolder.setUsername(model.getUsername());
-               // viewHolder.setLikeBtn(post_key);
+                //viewHolder.setLikeBtn(post_key);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //Toast.makeText(blog_app.this,"you clicked a view",Toast.LENGTH_LONG).show();
-                        Intent SingleBlogIntent=new Intent(blog_app.this,BlogSingleActivity.class);
+                        Intent SingleBlogIntent=new Intent(MyPost.this,BlogSingleActivity.class);
                         SingleBlogIntent.putExtra("blog_id",post_key);
                         startActivity(SingleBlogIntent);
 
@@ -113,26 +113,26 @@ public class blog_app extends AppCompatActivity {
                     public void onClick(View view) {
                         mProcessLike=true;
                         mDatabaseLike.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (mProcessLike) {
-                                        Toast.makeText(blog_app.this,"dhukse",Toast.LENGTH_LONG).show();
-                                        if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessLike) {
+                                    Toast.makeText(MyPost.this,"dhukse",Toast.LENGTH_LONG).show();
+                                    if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                                            mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
-                                            mProcessLike = false;
-                                        } else {
-                                            mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Randomvalue");
-                                            mProcessLike = false;
-                                        }
+                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                        mProcessLike = false;
+                                    } else {
+                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Randomvalue");
+                                        mProcessLike = false;
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                                }
-                            });
+                            }
+                        });
 
                     }
                 });
@@ -142,7 +142,7 @@ public class blog_app extends AppCompatActivity {
         mBlogList.setAdapter(firebaseRecyclerAdapter);
     }
     private void checkUserExist() {
-        Toast.makeText(blog_app.this,"user exist a dhukse",Toast.LENGTH_LONG).show();
+        Toast.makeText(MyPost.this,"user exist a dhukse",Toast.LENGTH_LONG).show();
         final String user_id=mAuth.getCurrentUser().getUid();
         mDatabaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
@@ -150,7 +150,7 @@ public class blog_app extends AppCompatActivity {
                 //Toast.makeText(Login.this,"pass wrong",Toast.LENGTH_LONG).show();
                 if(!dataSnapshot.hasChild(user_id))
                 {
-                    Intent setupIntent=new Intent(blog_app.this,SetupActivity.class);
+                    Intent setupIntent=new Intent(MyPost.this,SetupActivity.class);
                     setupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(setupIntent);
                 }
@@ -164,7 +164,7 @@ public class blog_app extends AppCompatActivity {
         });
     }
 
-  //RECYCLER VIEW ER JONNE  VIEW HOLDER LAGE value set korbe
+    //RECYCLER VIEW ER JONNE  VIEW HOLDER LAGE value set korbe
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
@@ -176,11 +176,11 @@ public class blog_app extends AppCompatActivity {
         TextView post_title;
         public BlogViewHolder(View itemView) {
             super(itemView);
-           mView=itemView;  //ITEM VIEW TE SOB DATA CHOLE ASBE MVIEW OBJ A SAVE KORLAM
+            mView=itemView;  //ITEM VIEW TE SOB DATA CHOLE ASBE MVIEW OBJ A SAVE KORLAM
 
             mLikebtn=(ImageButton) mView.findViewById(R.id.like_btn);
-           mDatabaseLike=FirebaseDatabase.getInstance().getReference().child("Likes");
-           mAuth=FirebaseAuth.getInstance();
+            mDatabaseLike=FirebaseDatabase.getInstance().getReference().child("Likes");
+            mAuth=FirebaseAuth.getInstance();
             mDatabaseLike.keepSynced(true);
 
             post_title=(TextView) mView.findViewById(R.id.post_title);//mView object er post title er layput indicate korlam
@@ -193,18 +193,18 @@ public class blog_app extends AppCompatActivity {
                 }
             });
         }
-       /* public void setLikeBtn(final String post_key)
+        public void setLikeBtn(final String post_key)
         {
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-               if(dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid()))
-               {
-                   mLikebtn.setImageResource(R.mipmap.like_red);
-               }
-               else{
-                   mLikebtn.setImageResource(R.mipmap.like_gray);
-               }
+                    if(dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid()))
+                    {
+                        mLikebtn.setImageResource(R.mipmap.like_red);
+                    }
+                    else{
+                        mLikebtn.setImageResource(R.mipmap.like_gray);
+                    }
                 }
 
                 @Override
@@ -212,7 +212,7 @@ public class blog_app extends AppCompatActivity {
 
                 }
             });
-        } */
+        }
         public void setTitle(String title)
         {   //PARAMETER STRING TITLE A THAKBE title a JETA TYPE KORA HOISE
 
@@ -224,7 +224,7 @@ public class blog_app extends AppCompatActivity {
             TextView post_desc=(TextView) mView.findViewById(R.id.post_desc);
             post_desc.setText(desc);
         }
-        public void setImage(Context ctx,String image)
+        public void setImage(Context ctx, String image)
         {
             ImageView post_image=(ImageView) mView.findViewById(R.id.post_image);
             Picasso.with(ctx).load(image).into(post_image);
@@ -237,7 +237,7 @@ public class blog_app extends AppCompatActivity {
     }
 
 
-//MAIN MENU ICON ER KAJ EKHAN THEKE
+    //MAIN MENU ICON ER KAJ EKHAN THEKE
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //menu resource file read kore
@@ -250,7 +250,7 @@ public class blog_app extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_add)
         {
-            startActivity(new Intent(blog_app.this,PostActivity.class));
+            startActivity(new Intent(MyPost.this,PostActivity.class));
         }
         if(item.getItemId()==R.id.action_logout)
         {
@@ -258,21 +258,20 @@ public class blog_app extends AppCompatActivity {
         }
         if(item.getItemId()==R.id.myPost)
         {
-            startActivity(new Intent(blog_app.this,MyPost.class));
+            startActivity(new Intent(MyPost.this,ProfilePage.class));
         }
         if(item.getItemId()==R.id.member_details)
         {
-            startActivity(new Intent(blog_app.this,MemberDetails.class));
+            startActivity(new Intent(MyPost.this,MemberDetails.class));
         }
         if(item.getItemId()==R.id.my_profile)
         {
-            startActivity(new Intent(blog_app.this,Check.class));
+            startActivity(new Intent(MyPost.this,Check.class));
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void logout() {
         mAuth.signOut();
-        startActivity(new Intent(blog_app.this,firstPage.class));
     }
-}
+    }

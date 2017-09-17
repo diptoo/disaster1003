@@ -81,10 +81,10 @@ public class SetupActivity extends AppCompatActivity {
 
                     mDatabaseUsers.child(user_id).child("name").setValue(name);
                     mDatabaseUsers.child(user_id).child("image").setValue(downloadUri);
-
+//CHANGE HOISE INTENT
                mProgress.dismiss();
-                    Intent mainIntent=new Intent(SetupActivity.this,blog_app.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent mainIntent=new Intent(SetupActivity.this,Input.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//mbl btn back press er jonno
                     startActivity(mainIntent);
                 }
             });

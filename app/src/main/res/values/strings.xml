@@ -43,7 +43,18 @@
         <item>Cristian</item>
         <item>Bouddho</item>
     </array>
+    <array name="donate_type">
+        <item>Money</item>
+        <item>Food</item>
+        <item>Clothings</item>
+    </array>
+    <array name="donate_method">
+        <item>Bkask</item>
+        <item>Credit Card</item>
+        <item>By Hand</item>
+    </array>
     <string name="title_activity_home_page">HomePage</string>
     <string name="action_settings">Settings</string>
+    <string name="facebook_application_id" translatable="false">172313410005522</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>
